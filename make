@@ -80,5 +80,5 @@ fi
 
 if [ "$d" = true ]
 then
-    make html
+    python -m sphinx -b html docs build
 fi

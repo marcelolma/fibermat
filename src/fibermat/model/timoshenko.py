@@ -307,9 +307,9 @@ class Timoshenko:
 
         # Get mesh data
         mask = (mesh.index.values < mesh.beam.values)
-        fiber = mesh.fiber[mask].values
-        i = mesh.index[mask].values
-        j = mesh.beam[mask].values
+        fiber = mesh.fiber[mask].to_numpy(copy=True)
+        i = mesh.index[mask].to_numpy(copy=True)
+        j = mesh.beam[mask].to_numpy(copy=True)
 
         # Get material data
         mat = mesh.flags.mat
@@ -436,10 +436,10 @@ class Timoshenko:
         assert Mesh.check(mesh)
 
         # Get mesh data
-        mask = (mesh.index.values <= mesh.constraint.values)
-        i = mesh.index[mask].values
-        j = mesh.constraint[mask].values
-        k = np.arange(len(i))
+        mask = (mesh.index.to_numpy(copy=True) <= mesh.constraint.to_numpy(copy=True))
+        i = mesh.index[mask].to_numpy(copy=True)
+        j = mesh.constraint[mask].to_numpy(copy=True)
+        k = np.arange(len(i), dtype=int)
         O = i * 0  # : zero
         I = O + 1  # : one
 

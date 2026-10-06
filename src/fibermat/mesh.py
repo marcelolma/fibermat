@@ -187,8 +187,10 @@ class Mesh(pd.DataFrame):
             mesh.beam = indices[mesh.beam]
             mesh.constraint = indices[mesh.constraint]
             # Correct end nodes
-            mask = (mesh.fiber.values == mesh.fiber.loc[mesh.constraint].values)
-            mesh.constraint.values[mask] = mesh.index[mask]
+            mask = (mesh.fiber.to_numpy() == mesh.fiber.loc[mesh.constraint].to_numpy())
+            constraint = mesh["constraint"].to_numpy(copy=True)
+            constraint[mask] = mesh.index[mask]
+            mesh["constraint"] = constraint
 
         # Return the `Mesh` object
         return mesh
